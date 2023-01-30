@@ -32,9 +32,6 @@ public class CustomLineEntry {
         return keys;
     }
 
-    public static void main(String args[]) {
-        System.out.println(fetchTableHeaderList());
-    }
 
     public Object fetchValue(String paraName) throws Exception {
         //Field[] fields = LineEntry.class.getDeclaredFields();

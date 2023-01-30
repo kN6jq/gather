@@ -6,9 +6,12 @@ import burp.IContextMenuInvocation;
 import burp.IHttpRequestResponse;
 import burp.entry.CustomLineEntry;
 import burp.ui.FastjsonPane;
+import burp.ui.NucleiPane;
 import burp.utils.RobotInput;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -126,6 +129,31 @@ public class ToolsMenu implements IContextMenuFactory {
                 }
             });
             menus.add(fastjson_exp);
+
+            // nuclei窗口的菜单
+            JMenuItem nuclei_exp = new JMenuItem("nuclei");
+            nuclei_exp.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    Thread thread = new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                NucleiPane nucleiPane = new NucleiPane(iContextMenuInvocation);
+                                String s = nucleiPane.Check();
+                                // java 复制字符串到粘贴板
+                                StringSelection stsel = new StringSelection(s);
+                                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stsel, stsel);
+
+                            } catch (Exception ex) {
+                                stdout.println(ex.getMessage());
+                            }
+                        }
+                    });
+                    thread.start();
+                }
+            });
+            menus.add(nuclei_exp);
 
         }
         return menus;

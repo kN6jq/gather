@@ -1,6 +1,7 @@
 package burp;
 
 import burp.menu.ToolsMenu;
+import burp.u2c.u2c;
 import burp.ui.MainUi;
 
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ public class BurpExtender implements IBurpExtender {
         cbs.customizeUiComponent(mainUi);
         cbs.addSuiteTab(mainUi);
         cbs.registerContextMenuFactory(new ToolsMenu());
+        cbs.registerMessageEditorTabFactory(new u2c());
     }
 }
 

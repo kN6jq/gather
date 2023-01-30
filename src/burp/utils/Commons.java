@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static burp.utils.Utils.*;
 
@@ -120,4 +122,18 @@ public class Commons {
             return null;
         }
     }
+
+    public static String replaceurl(String url) {
+
+        String str = "GET (.*?) HTTP";            //提取风级的正则表达式
+        Pattern compile = Pattern.compile(str);
+        Matcher result = compile.matcher(url);
+        if (result.find()) {
+            return result.group(1);
+        } else {
+            return "";
+        }
+    }
+
+
 }
