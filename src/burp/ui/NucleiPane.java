@@ -58,7 +58,6 @@ public class NucleiPane {
             "          - \"#{[dsl]}\"\n";
     private static IHttpRequestResponse selectedMessage;
     private static HelperPlus helperPlus;
-    private static Getter gethelper;
     private static URL url;
     private static String dsl;
     private static String severity;

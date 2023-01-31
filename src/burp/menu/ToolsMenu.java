@@ -7,6 +7,7 @@ import burp.IHttpRequestResponse;
 import burp.entry.CustomLineEntry;
 import burp.ui.FastjsonPane;
 import burp.ui.NucleiPane;
+import burp.ui.PocsuitePane;
 import burp.utils.RobotInput;
 
 import javax.swing.*;
@@ -154,6 +155,32 @@ public class ToolsMenu implements IContextMenuFactory {
                 }
             });
             menus.add(nuclei_exp);
+
+
+            // pocsuite窗口的菜单
+            JMenuItem pocsuite_exp = new JMenuItem("pocsuite");
+            pocsuite_exp.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    Thread thread = new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                PocsuitePane pocsuitePane = new PocsuitePane(iContextMenuInvocation);
+                                String s = pocsuitePane.check();
+                                // java 复制字符串到粘贴板
+                                StringSelection result = new StringSelection(s);
+                                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(result, result);
+
+                            } catch (Exception ex) {
+                                stdout.println(ex.getMessage());
+                            }
+                        }
+                    });
+                    thread.start();
+                }
+            });
+            menus.add(pocsuite_exp);
 
         }
         return menus;
