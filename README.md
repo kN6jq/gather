@@ -45,19 +45,26 @@ java我也就学了一年,能运行已经很不错了
 
 注意: dnslog需要在config面板配置dnslog地址,并且执行完成后需要在dnslog平台手动查看
 
+### u2c 字符转换
+
+抄的bit4woo代码
+
 ### nuclei 模板生成
+
+右击选择即可
+
+### pocsuite 模板生成
 
 右击选择即可
 
 # TODO
 
-- pocsuite 模板生成
-- 
-
-其他还在想
+- 优化代码
+- 实现更多的利用方式
 
 # 项目参考
 
 - 参考ui设计: https://github.com/aw220/InOne
 - 参考fastjson利用实现: https://github.com/skisw/fastjson-exp
 - 参考命令行终端调用: https://github.com/bit4woo/knife
+- 参考u2c插件: https://github.com/bit4woo/u2c
