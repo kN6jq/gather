@@ -2,6 +2,13 @@
 
 # 功能介绍
 
+## 2023年1月31日15:12:41
+
+第三次提交,实现了pocsuite模板生成
+主要实现就是对content-type进行判断,然后根据不同的content-type生成不同的模板
+主要有三种模板,application/x-www-form-urlencoded,application/json,multipart/form-data
+需要自行修改请求uri,传递参数,命中及结果代码
+
 ## 2023年1月30日22:49:24 
 
 第二次提交,复制了大师傅的u2c插件,以及自己实现了nuclei的模板生成
