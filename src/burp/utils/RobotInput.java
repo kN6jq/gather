@@ -39,31 +39,31 @@ public class RobotInput extends Robot {
     public void inputString(String str) {
         delay(100);
         Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//获取剪切板
-        Transferable origin = clip.getContents(null);//备份之前剪切板的内容
+//        Transferable origin = clip.getContents(null);//备份之前剪切板的内容
         StringSelection tText = new StringSelection(str);
         clip.setContents(tText, tText); //设置剪切板内容,在Linux中这会修改ctrl+shift+v的内容
 
-        if (Commons.isWindows10()) {//粘贴的不同实现方式
-            inputWithCtrl(KeyEvent.VK_V);
-        } else if (Commons.isWindows()) {
-            inputWithAlt(KeyEvent.VK_SPACE);//
-            InputChar(KeyEvent.VK_E);
-            InputChar(KeyEvent.VK_P);
-
-        } else if (Commons.isMac()) {
-            delay(100);
-            keyPress(KeyEvent.VK_META);
-            keyPress(KeyEvent.VK_V);
-            delay(100);
-            keyRelease(KeyEvent.VK_V);
-            keyRelease(KeyEvent.VK_META);
-            delay(100);
-        } else if (Commons.isUnix()) {
-
-            inputWithCtrlAndShift(KeyEvent.VK_V);
-
-        }
-        clip.setContents(origin, null);//恢复之前剪切板的内容
+//        if (Commons.isWindows10()) {//粘贴的不同实现方式
+//            inputWithCtrl(KeyEvent.VK_V);
+//        } else if (Commons.isWindows()) {
+//            inputWithAlt(KeyEvent.VK_SPACE);//
+//            InputChar(KeyEvent.VK_E);
+//            InputChar(KeyEvent.VK_P);
+//
+//        } else if (Commons.isMac()) {
+//            delay(100);
+//            keyPress(KeyEvent.VK_META);
+//            keyPress(KeyEvent.VK_V);
+//            delay(100);
+//            keyRelease(KeyEvent.VK_V);
+//            keyRelease(KeyEvent.VK_META);
+//            delay(100);
+//        } else if (Commons.isUnix()) {
+//
+//            inputWithCtrlAndShift(KeyEvent.VK_V);
+//
+//        }
+//        clip.setContents(origin, null);//恢复之前剪切板的内容
         delay(100);
     }
 

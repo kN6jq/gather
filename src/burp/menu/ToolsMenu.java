@@ -43,7 +43,7 @@ public class ToolsMenu implements IContextMenuFactory {
                                     try {
                                         RobotInput ri = new RobotInput();
                                         if (messages != null) {
-                                            RobotInput.startCmdConsole();//尽早启动减少出错概率
+//                                            RobotInput.startCmdConsole();//尽早启动减少出错概率
                                             String cmd = c.getTemplate();
                                             if (cmd.contains("{url}")) {
                                                 String url = helpers.analyzeRequest(baseRequestResponse).getUrl().toString();
