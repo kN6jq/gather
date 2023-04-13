@@ -4,7 +4,9 @@ import burp.IBurpExtenderCallbacks;
 import burp.IContextMenuFactory;
 import burp.IContextMenuInvocation;
 import burp.IHttpRequestResponse;
+import burp.auth.AuthRun;
 import burp.entry.CustomLineEntry;
+import burp.ui.AuthPane;
 import burp.ui.FastjsonPane;
 import burp.ui.NucleiPane;
 import burp.ui.PocsuitePane;
@@ -37,7 +39,7 @@ public class ToolsMenu implements IContextMenuFactory {
                     tools.add(new JMenuItem(new AbstractAction(c.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            Runnable DirsearchRunner = new Runnable() {
+                            Runnable toolRunner = new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
@@ -64,7 +66,7 @@ public class ToolsMenu implements IContextMenuFactory {
                                     }
                                 }
                             };
-                            new Thread(DirsearchRunner).start();
+                            new Thread(toolRunner).start();
                         }
                     }));
                 }
@@ -131,6 +133,26 @@ public class ToolsMenu implements IContextMenuFactory {
             });
             menus.add(fastjson_exp);
 
+            JMenuItem auth = new JMenuItem("auth");
+            auth.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        Thread thread = new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                AuthRun authRun = new AuthRun(baseRequestResponse);
+                                authRun.run();
+                            } catch (Exception ex) {
+                                stdout.println(ex.getMessage());
+                            }
+                        }
+                    });
+                    thread.start();
+
+
+                }
+            });
+            menus.add(auth);
             // nuclei窗口的菜单
             JMenuItem nuclei_exp = new JMenuItem("nuclei");
             nuclei_exp.addActionListener(new ActionListener() {

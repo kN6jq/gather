@@ -17,16 +17,10 @@ import static burp.BurpExtender.mainUi;
 import static burp.utils.Utils.*;
 
 public class FastjsonPane extends AbstractTableModel implements IMessageEditorController {
-    private JSplitPane mjSplitPane;
-    private java.util.List<FastjsonPane.TablesData> Udatas = new ArrayList<FastjsonPane.TablesData>();
+    private final java.util.List<FastjsonPane.TablesData> Udatas = new ArrayList<FastjsonPane.TablesData>();
     private IMessageEditor HRequestTextEditor;
     private IMessageEditor HResponseTextEditor;
     private IHttpRequestResponse currentlyDisplayedItem;
-    private FastjsonPane.URLTable Utable;
-    private JScrollPane UscrollPane;
-    private JSplitPane HjSplitPane;
-    private JTabbedPane Ltable;
-    private JTabbedPane Rtable;
 
 
     public FastjsonPane() {
@@ -38,32 +32,32 @@ public class FastjsonPane extends AbstractTableModel implements IMessageEditorCo
         JPanel scanQueue = new JPanel(new BorderLayout());
 
         // 主分隔面板
-        mjSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        JSplitPane mjSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
         // 任务栏面板
-        Utable = new FastjsonPane.URLTable(FastjsonPane.this);
-        UscrollPane = new JScrollPane(Utable);
+        URLTable utable = new URLTable(FastjsonPane.this);
+        JScrollPane uscrollPane = new JScrollPane(utable);
 
         // 请求与响应界面的分隔面板规则
-        HjSplitPane = new JSplitPane();
-        HjSplitPane.setResizeWeight(0.5);
+        JSplitPane hjSplitPane = new JSplitPane();
+        hjSplitPane.setResizeWeight(0.5);
 
         // 请求的面板
-        Ltable = new JTabbedPane();
+        JTabbedPane ltable = new JTabbedPane();
         HRequestTextEditor = cbs.createMessageEditor(FastjsonPane.this, false);
-        Ltable.addTab("Request", HRequestTextEditor.getComponent());
+        ltable.addTab("Request", HRequestTextEditor.getComponent());
 
         // 响应的面板
-        Rtable = new JTabbedPane();
+        JTabbedPane rtable = new JTabbedPane();
         HResponseTextEditor = cbs.createMessageEditor(FastjsonPane.this, false);
-        Rtable.addTab("Response", HResponseTextEditor.getComponent());
+        rtable.addTab("Response", HResponseTextEditor.getComponent());
 
         // 自定义程序UI组件
-        HjSplitPane.add(Ltable, "left");
-        HjSplitPane.add(Rtable, "right");
+        hjSplitPane.add(ltable, "left");
+        hjSplitPane.add(rtable, "right");
 
-        mjSplitPane.add(UscrollPane, "left");
-        mjSplitPane.add(HjSplitPane, "right");
+        mjSplitPane.add(uscrollPane, "left");
+        mjSplitPane.add(hjSplitPane, "right");
 
         scanQueue.add(mjSplitPane);
         tabs.addTab("fastjson", scanQueue);

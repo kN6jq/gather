@@ -12,6 +12,7 @@ public class MainUi extends JPanel implements ITab {
     private JTabbedPane PaneRoot;
     private FastjsonPane fastjsonPane;
     private ConfigPane configPane;
+    private AuthPane authPane;
 
     public MainUi(IBurpExtenderCallbacks callbacks) {
         initComponents();
@@ -19,6 +20,10 @@ public class MainUi extends JPanel implements ITab {
 
     public FastjsonPane getFastjsonPane() {
         return fastjsonPane;
+    }
+
+    public AuthPane getAuthPane() {
+        return authPane;
     }
 
     public ConfigPane getConfigPane() {
@@ -31,6 +36,7 @@ public class MainUi extends JPanel implements ITab {
     private void initComponents() {
         PaneRoot = new JTabbedPane();
         fastjsonPane = new FastjsonPane(PaneRoot);
+        authPane = new AuthPane(PaneRoot);
         configPane = new ConfigPane();
         setLayout(new BorderLayout());
 

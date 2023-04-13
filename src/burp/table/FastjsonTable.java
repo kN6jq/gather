@@ -11,7 +11,6 @@ public class FastjsonTable {
     public String res;
     public String startTime;
     public IHttpRequestResponse requestResponse;
-    private FastjsonTableModel tableModel;
 
     public FastjsonTable(int id, String extensionMethod, String url, String status,
                          String res, String startTime,
