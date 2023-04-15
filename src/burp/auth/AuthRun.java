@@ -11,7 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static burp.utils.Utils.*;
+import static burp.utils.Utils.cbs;
+import static burp.utils.Utils.helpers;
 
 public class AuthRun{
     private final IHttpRequestResponse baseRequestResponse;
@@ -36,68 +37,47 @@ public class AuthRun{
         }
         List<AuthRequest> authRequests = new ArrayList<>();
         authRequests.addAll(new AuthPayload().prefix(method, path));
-        List<AuthRequest> headers = new AuthPayload().headers(method, url);
-        if (Objects.equals(method, "GET")) {
+        authRequests.addAll(new AuthPayload().suffix(method, path));
+
+        if (Objects.equals(method, "GET") || Objects.equals(method, "POST")) {
             for (AuthRequest value : authRequests) {
-                authRequest = value;
-                if (Objects.equals(authRequest.getMethod(), "GET")) {
-                    String new_request = request.replaceFirst(path, authRequest.getPath());
+                if (Objects.equals(value.getMethod(), "GET")) {
+                    String new_request = request.replaceFirst(path, value.getPath());
                     IHttpRequestResponse response = cbs.makeHttpRequest(baseRequestResponse.getHttpService(), helpers.stringToBytes(new_request));
-                    String requrl = urlWithoutQuery + authRequest.getPath();
+                    String requrl = urlWithoutQuery + value.getPath();
                     String statusCode = String.valueOf(helpers.analyzeResponse(response.getResponse()).getStatusCode());
                     String length = String.valueOf(response.getResponse().length);
-                    AuthPane.addLog(response, method, requrl,statusCode, length);
-                }
-            }
-            for (AuthRequest header : headers) {
-                IRequestInfo analyzeRequest = helpers.analyzeRequest(this.baseRequestResponse);
-                List<String> httpheader = analyzeRequest.getHeaders();
-                byte[] byte_Request = this.baseRequestResponse.getRequest();
-                int bodyOffset = analyzeRequest.getBodyOffset();
-                int len = byte_Request.length;
-                byte[] body = Arrays.copyOfRange(byte_Request, bodyOffset, len);
-
-                httpheader.add(header.getHeaders());
-                byte[] message = helpers.buildHttpMessage(httpheader, body);
-                IHttpRequestResponse response = cbs.makeHttpRequest(baseRequestResponse.getHttpService(), message);
-                // 发送请求
-                String requrl = urlWithoutQuery + authRequest.getPath();
-                String statusCode = String.valueOf(helpers.analyzeResponse(response.getResponse()).getStatusCode());
-                String length = String.valueOf(response.getResponse().length);
-                AuthPane.addLog(response, method, requrl,statusCode, length);
-            }
-        } else if (Objects.equals(method, "POST")) {
-            for (AuthRequest value : authRequests) {
-                authRequest = value;
-                if (Objects.equals(authRequest.getMethod(), "POST")) {
-                    String new_request = request.replaceFirst(path, authRequest.getPath());
+                    AuthPane.addLog(response, method, requrl, statusCode, length);
+                } else if (Objects.equals(value.getMethod(), "POST")) {
+                    String new_request = request.replaceFirst(path, value.getPath());
                     IHttpRequestResponse response = cbs.makeHttpRequest(baseRequestResponse.getHttpService(), helpers.stringToBytes(new_request));
-                    String requrl = urlWithoutQuery + authRequest.getPath();
+                    String requrl = urlWithoutQuery + value.getPath();
                     String statusCode = String.valueOf(helpers.analyzeResponse(response.getResponse()).getStatusCode());
                     String length = String.valueOf(response.getResponse().length);
-                    AuthPane.addLog(response, method, requrl,statusCode, length);
+                    AuthPane.addLog(response, method, requrl, statusCode, length);
                 }
             }
-            for (AuthRequest header : headers) {
-                IRequestInfo analyzeRequest = helpers.analyzeRequest(this.baseRequestResponse);
-                List<String> httpheader = analyzeRequest.getHeaders();
-                byte[] byte_Request = this.baseRequestResponse.getRequest();
-                int bodyOffset = analyzeRequest.getBodyOffset();
-                int len = byte_Request.length;
-                byte[] body = Arrays.copyOfRange(byte_Request, bodyOffset, len);
+            // 增加header payload 测试
+            List<AuthRequest> headers = new AuthPayload().headers(method, url);
+            IRequestInfo analyzeRequest = helpers.analyzeRequest(this.baseRequestResponse);
+            List<String> httpheader = analyzeRequest.getHeaders();
+            byte[] byte_Request = this.baseRequestResponse.getRequest();
+            int bodyOffset = analyzeRequest.getBodyOffset();
+            int len = byte_Request.length;
+            byte[] body = Arrays.copyOfRange(byte_Request, bodyOffset, len);
 
+            for (AuthRequest header : headers) {
                 httpheader.add(header.getHeaders());
-                byte[] message = helpers.buildHttpMessage(httpheader, body);
-                IHttpRequestResponse response = cbs.makeHttpRequest(baseRequestResponse.getHttpService(), message);
-                // 发送请求
-                String requrl = urlWithoutQuery + authRequest.getPath();
-                String statusCode = String.valueOf(helpers.analyzeResponse(response.getResponse()).getStatusCode());
-                String length = String.valueOf(response.getResponse().length);
-                AuthPane.addLog(response, method, requrl,statusCode, length);
             }
-        } else {
-            stdout.println("Method not supported");
+            byte[] message = helpers.buildHttpMessage(httpheader, body);
+            IHttpRequestResponse response = cbs.makeHttpRequest(baseRequestResponse.getHttpService(), message);
+            // 发送请求
+            String statusCode = String.valueOf(helpers.analyzeResponse(response.getResponse()).getStatusCode());
+            String length = String.valueOf(response.getResponse().length);
+            AuthPane.addLog(response, method, url, statusCode, length);
         }
+
+
     }
 
     public void run() {
