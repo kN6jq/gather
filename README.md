@@ -1,3 +1,22 @@
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+[此项目不再更新 请使用 https://github.com/kN6jq/gatherBurp]
+
+
 解放命令行的burp插件
 
 注意: 使用该插件,别看作者代码,代码写的很烂,只是为了方便自己使用,如果有人看到了,希望能给点建议,谢谢
